@@ -140,6 +140,8 @@ func (w *MongoWorker) InitWorker(
 		// w.session, err = mgo.Dial(w.server)
 
 		w.session, err = mgo.DialWithInfo(&_dial_info)
+		// w.session.SetMode(mgo.Monotonic, false)
+
 	} else {
 		w.session = masterMgoSession.Copy()
 		// log.Println("initiate worker ", w.id, " via mgo.Copy")
