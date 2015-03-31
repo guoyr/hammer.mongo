@@ -101,6 +101,12 @@ func (w *MongoWorker) Run(c <-chan int, t <-chan time.Time) {
 				} else {
 					stats.HammerStats.RecordError(w.id)
 				}
+
+				newSession := w.session.Copy()
+				w.session.Close()
+				w.session = newSession
+				w.session.EnsureSafe(&mgo.Safe{})
+
 			}
 
 			w.c = w.c + 1
